@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block title %}Submit{% endblock %}
+{% block content %}
+<h2>Submit Your Data</h2>
+<div id="toast" class="hidden fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg"></div>
+<form id="submitForm" method="post">
+    <label for="data">Data</label>
+    <textarea id="data" name="data" rows="5" required minlength="10"></textarea>
+    <button type="submit">Submit</button>
+</form>
+<script>
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+    setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 3000);
+}
+
+document.getElementById("submitForm").addEventListener("submit", function(e) {
+    const data = document.getElementById("data");
+    if (!data.value || data.value.length < 10) {
+        e.preventDefault();
+        showToast("Please provide at least 10 characters.");
+        return false;
+    }
+    showToast("Data submitted successfully!");
+});
+</script>
+{% endblock %}
